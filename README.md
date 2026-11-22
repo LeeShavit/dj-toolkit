@@ -1,53 +1,38 @@
-# get-songs 🎧
+# dj-toolkit 🎧
 
-A Claude Code plugin: give Claude any list of songs, and it downloads them in the best quality and **in the version you actually want** (extended / club mixes for DJs). It uses the tools you already have, checks every file, and gets smarter about your setup over time.
-
-```
-/get-songs
-John Summit - WITH ME
-Darude - Sandstorm
-https://open.spotify.com/playlist/...
-```
-→ `Got 31/35 ✅ (FLAC 22 · MP3 320 9) · ⚠️ 1 to check · 🛒 2 in your Beatport cart · ❌ 2 not found`
+A Claude Code plugin that collects a working DJ's know-how into skills Claude runs for you: downloading songs in the right version, identifying tracks in sets, organizing and tagging your library, catching fake lossless files, upgrading radio edits to extended mixes, and fixing rekordbox.
 
 ## Install
 
 In Claude Code:
 ```
-/plugin marketplace add LeeShavit/get-songs
-/plugin install get-songs@get-songs
+/plugin marketplace add LeeShavit/dj-toolkit
+/plugin install dj-toolkit@dj-toolkit
+/dj-setup
 ```
-Then run `/get-songs setup`. Claude interviews you for about 5 minutes (what you use, your preferences, your folders) and sets everything up.
+`/dj-setup` asks about 5 minutes of questions: your DJ software, library folders, **folders that must never be touched**, genres, download sources and preferences. Then it installs the small runtime (`uv` + `ffmpeg`). Every tool reads that one config.
 
-## What it does
+## The tools
 
-- **Learns you once**: version preference (extended / exact / original), minimum quality, folders, whether to add buy-only tracks to your cart. Saved in `~/.claude/get-songs/config.md`, which you can edit by hand.
-- **Uses your sources in your order**, sending each track to the next source only if the previous one missed it:
+| Command | What it does |
+|---|---|
+| `/get-songs <songs, file or playlist link>` | Downloads in the best version for mixing (extended/club) from **your** sources, in your order: Offline DJ (via its Telegram bot), Qobuz/Tidal/Deezer (streamrip), Soulseek (sldl), Beatport/Bandcamp carts (you pay yourself), YouTube/SoundCloud as a labelled last resort. Skips what you already have, checks every file, and **learns new platforms** as new skills. |
+| `/setlist-id <set link>` | Tracklist of any SoundCloud/YouTube DJ set: timestamps, exact remix, label, links. Free (Shazam fingerprinting, no accounts). Can also build a double-click **Setlist ID** app for friends who never open a terminal. |
+| `/organize-library` | Sorts a batch into genre folders, removes true duplicates by comparing audio, fills every tag it can (Deezer lookups, local BPM/key estimates), cleans junk tags, shows a review page, then builds a rekordbox XML import. Never touches your protected folders. |
+| `/audio-quality <folder>` | Finds FLAC/WAV files made from MP3s, and "320s" upscaled from 128, by spotting the encoder's frequency cliff. Report, optional comment tags for sorting in your DJ software, and re-download of fakes. |
+| `/upgrade-to-extended` | Finds the extended version of every song in your library (same remixer, verified length), downloads them via get-songs, catches "extended" files that are really radio edits, and picks the best version to mix (clean beat intro/outro, no fades). |
+| `/rekordbox-tools` | rekordbox database tools: status and missing files, **repoint playlists to new files** without rebuilding them (keeps cues when the audio is identical), merge duplicates, BPM/grid triage. Backs up and tests on a copy first. |
+| `/dj-troubleshooting` | Proven fixes: no sound from the controller, quiet headphones, rekordbox analysis stuck (Cloud Analysis), drifting grids, missing tracks. |
 
-  | Source | How | Cost |
-  |---|---|---|
-  | Offline DJ | Claude messages the Offline DJ Telegram bot from your account | your subscription |
-  | Qobuz / Tidal / Deezer | streamrip CLI with your account | your subscription |
-  | Soulseek | sldl / Sockseek CLI, available to everyone | free |
-  | Beatport / Bandcamp | adds to **your cart** in Chrome; you pay yourself | per track |
-  | YouTube / SoundCloud | yt-dlp, last resort, labelled LOSSY | free |
-
-- **Checks every file**: right version (not a radio edit or a different remix), plausible length, real lossless. Wrong files go to `_rejected/` and that track tries the next source.
-- **Skips what you already have** by scanning your library folders (read-only).
-- **Learns new platforms**: tell it "I use DJcity" (or anything else). Claude researches how to drive it, tests with a track, and writes a new skill to `~/.claude/skills/get-songs-platform-<name>/`, so it works next time. You can share these skills with friends.
-
-## Commands
-- `/get-songs <songs | file | playlist link>`: download
-- `/get-songs setup`: first-time setup or re-setup
-- `/get-songs add <platform>`: teach it a new source
-- `/get-songs settings`: change preferences
-- `/get-songs status`: platforms and last run
-
-## Your data
-Everything personal stays on your computer in `~/.claude/get-songs/`: config, platform notes, run reports, and `secrets/` (API keys and sessions, readable only by you). Nothing is sent anywhere except to the services you set up.
+## Your data and safety
+- Everything personal stays on your computer in `~/.claude/dj-toolkit/`: config, platform notes, reports, backups, and `secrets/` (readable only by you).
+- **Protected folders** you name in setup are read-only for every tool.
+- Nothing is deleted: removed files go to the Trash, and only when you say so.
+- Music files only change after you approve a review. DJ-software databases are backed up and tested on a copy first.
+- get-songs never completes a purchase and never bypasses DRM or paywalls.
 
 ## Requirements
-Claude Code · Python 3.10+ · `ffmpeg` recommended · Claude in Chrome for the Beatport and Bandcamp carts.
+Claude Code · macOS or Windows (Linux works for most tools) · `uv` and `ffmpeg` (installed by `/dj-setup`) · Claude in Chrome for the Beatport/Bandcamp cart and Beatport version lookups.
 
 ## Fair use
-You're responsible for following copyright law and each service's terms where you live. get-songs never completes purchases and never bypasses DRM or paywalls. Support the artists you play. 🙏
+You're responsible for following copyright law and each service's terms where you live. Support the artists you play. 🙏

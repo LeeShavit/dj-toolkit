@@ -1,0 +1,35 @@
+SETLIST ID – find every track in a DJ set
+==========================================
+
+START IT
+  Mac:     double-click "Setlist ID.command"
+  Windows: double-click "Setlist ID.bat"
+
+  A small window opens, and then a page in your web browser.
+  The very first time, it spends a minute or two setting itself up.
+
+USE IT
+  1. Copy the link to a DJ set on SoundCloud or YouTube.
+  2. Paste it into the box and press Go.
+  3. Wait. A one-hour set takes about 15–20 minutes. Leave the page open.
+  4. The tracklist opens on its own, with links to Spotify, Apple Music,
+     Deezer, YouTube, SoundCloud, Beatport and more for every track.
+
+  Your old tracklists stay listed on the start page.
+  To stop the app, press "Quit Setlist ID" at the bottom of the page,
+  or close the small window.
+
+FIRST TIME ONLY – if your computer blocks it
+  Mac: you may see "Apple could not verify Setlist ID.command".
+    Click Done, then open System Settings → Privacy & Security,
+    scroll down, and click "Open Anyway" next to Setlist ID.command.
+  Windows: you may see "Windows protected your PC".
+    Click "More info", then "Run anyway".
+
+GOOD TO KNOW
+  - Tracks marked "possible" were only heard once – they might be wrong.
+  - "ID – unidentified" means the track isn't in Shazam's database
+    (often unreleased music).
+  - It needs an internet connection while it works.
+  - Free to use: no accounts or payments are involved.
+  - To remove it, delete this folder.

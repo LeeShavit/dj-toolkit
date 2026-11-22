@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Library Review</title>
+<style>
+:root{--bg:#121316;--panel:#1b1d22;--line:#2c2f36;--tx:#e8e9ec;--mut:#9095a0;--acc:#3fb6ff;--warn:#f2b84b;--bad:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 16px;z-index:2}
+h1{font-size:18px;margin:0 0 2px}p.sub{color:var(--mut);margin:0 0 10px}
+.ctl{display:flex;gap:8px;flex-wrap:wrap}input{flex:1;min-width:200px;background:var(--panel);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:14px}
+button{background:var(--panel);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:8px 10px;cursor:pointer;font-size:13px}
+button[aria-pressed=true]{border-color:var(--warn);color:var(--warn)}
+main{padding:12px 16px 60px;max-width:1150px;margin:auto}
+details{background:var(--panel);border:1px solid var(--line);border-radius:8px;margin-bottom:8px}
+summary{padding:10px 12px;cursor:pointer;font-weight:600}summary .n{color:var(--mut);font-weight:400;margin-left:6px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}
+td,th{padding:5px 12px;border-top:1px solid var(--line);text-align:left;white-space:nowrap}th{color:var(--mut);font-weight:500}
+td.t{white-space:normal;min-width:260px}td.num{font-variant-numeric:tabular-nums}
+.est{color:var(--mut)}.tag{display:inline-block;font-size:11px;padding:0 5px;border-radius:4px;margin-left:5px;border:1px solid var(--line);color:var(--mut)}
+.tag.u{color:var(--warn);border-color:var(--warn)}.tag.f{color:var(--bad);border-color:var(--bad)}
+.note{color:var(--mut);padding:8px 12px 12px;margin:0}
+</style></head><body>
+<header><h1>Library review</h1>
+<p class="sub" id="sub"></p>
+<div class="ctl"><input id="q" placeholder="Search artist, track or genre" aria-label="Search">
+<button id="unsure" aria-pressed="false">Only tracks to check</button><button id="open">Expand all</button><button id="close">Collapse all</button></div>
+</header><main id="m"></main>
+<script>
+var D=__DATA__;
+var m=document.getElementById('m'),q=document.getElementById('q'),ub=document.getElementById('unsure'),onlyU=false;
+function esc(s){var d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML}
+function render(){var s=q.value.trim().toLowerCase(),tot=0,uns=0;m.innerHTML='';
+D.genres.forEach(function(g){var r=g.tracks.filter(function(t){
+ var hay=(t.a+' '+t.t+' '+g.name+' '+t.x.join(' ')).toLowerCase();
+ return (!s||hay.indexOf(s)>=0)&&(!onlyU||t.u||t.f)});
+ tot+=r.length;r.forEach(function(t){if(t.u)uns++});if(!r.length)return;
+ var e=document.createElement('details');if(s||onlyU)e.open=true;
+ var h='<summary>'+esc(g.name)+'<span class="n">'+r.length+' tracks</span></summary><div class="tw"><table><thead><tr><th>Artist</th><th>Track</th><th>BPM</th><th>Key</th><th>Year</th><th>Also in</th></tr></thead><tbody>';
+ r.forEach(function(t){h+='<tr><td>'+esc(t.a)+'</td><td class="t">'+esc(t.t)+(t.u?'<span class="tag u">check genre</span>':'')+(t.f?'<span class="tag f">fake lossless</span>':'')+(t.s?'<span class="tag">set folder, stays</span>':'')+'</td><td class="num '+(t.be?'est':'')+'">'+esc(t.b)+(t.be?'*':'')+'</td><td class="num '+(t.ke?'est':'')+'">'+esc(t.k)+(t.ke?'*':'')+'</td><td class="num">'+esc(t.y)+'</td><td>'+esc(t.x.join(', '))+'</td></tr>'});
+ e.innerHTML=h+'</tbody></table></div>';m.appendChild(e)});
+if(!onlyU&&!s&&D.dups.length){var e=document.createElement('details');var h='<summary>Duplicates going to _Duplicates<span class="n">'+D.dups.length+' files</span></summary><p class="note">Same audio as a copy that stays. Nothing is deleted.</p><div class="tw"><table><tbody>';
+ D.dups.forEach(function(d){h+='<tr><td>'+esc(d.artist)+'</td><td class="t">'+esc(d.title)+'</td><td>'+esc(d.src.split('/')[0].slice(0,34))+'</td></tr>'});e.innerHTML=h+'</tbody></table></div>';m.appendChild(e)}
+document.getElementById('sub').textContent=tot+' tracks shown. * means estimated from the audio; rekordbox will replace it when it analyzes.'}
+q.addEventListener('input',render);
+ub.addEventListener('click',function(){onlyU=!onlyU;ub.setAttribute('aria-pressed',onlyU);render()});
+document.getElementById('open').addEventListener('click',function(){document.querySelectorAll('details').forEach(function(d){d.open=true})});
+document.getElementById('close').addEventListener('click',function(){document.querySelectorAll('details').forEach(function(d){d.open=false})});
+render();
+</script></body></html>

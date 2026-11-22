@@ -1,16 +1,14 @@
 {
-  "name": "get-songs",
-  "owner": {
-    "name": "LeeShavit"
-  },
+  "name": "dj-toolkit",
+  "owner": { "name": "LeeShavit" },
   "metadata": {
-    "description": "get-songs: Claude downloads any list of songs in the best version and quality using your own tools."
+    "description": "A DJ's toolkit for Claude Code: download songs in the best version, ID tracks in DJ sets, organize and tag your library, catch fake lossless files, upgrade to extended mixes, and fix rekordbox."
   },
   "plugins": [
     {
-      "name": "get-songs",
-      "source": "./plugins/get-songs",
-      "description": "Give Claude any list of songs and get them downloaded in the best quality and version (extended/club), using your own tools: Offline DJ, Soulseek, Qobuz/Tidal/Deezer, Beatport/Bandcamp carts and more."
+      "name": "dj-toolkit",
+      "source": "./plugins/dj-toolkit",
+      "description": "Download songs in the best version (extended/club) from your own sources, identify tracks in DJ sets, organize + tag your library for rekordbox, find fake lossless files, upgrade radio edits to extended mixes, rekordbox DB tools and troubleshooting."
     }
   ]
 }
