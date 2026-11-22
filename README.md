@@ -14,7 +14,7 @@ https://open.spotify.com/playlist/...
 
 In Claude Code:
 ```
-/plugin marketplace add <github-user>/get-songs
+/plugin marketplace add LeeShavit/get-songs
 /plugin install get-songs@get-songs
 ```
 Then run `/get-songs setup`. Claude interviews you for about 5 minutes (what you use, your preferences, your folders) and sets everything up.

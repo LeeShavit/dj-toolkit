@@ -2,5 +2,19 @@
   "name": "get-songs",
   "version": "0.1.0",
   "description": "Download any list of songs with Claude: one-time setup learns your tools and taste, then /get-songs finds the best version (extended/club), downloads via your sources (Offline DJ, Soulseek, streaming, stores), verifies every file, and learns new platforms as skills.",
-  "keywords": ["music", "dj", "download", "soulseek", "offlinedj", "beatport", "bandcamp", "extended-mix"]
+  "keywords": [
+    "music",
+    "dj",
+    "download",
+    "soulseek",
+    "offlinedj",
+    "beatport",
+    "bandcamp",
+    "extended-mix"
+  ],
+  "author": {
+    "name": "LeeShavit",
+    "url": "https://github.com/LeeShavit"
+  },
+  "homepage": "https://github.com/LeeShavit/get-songs"
 }

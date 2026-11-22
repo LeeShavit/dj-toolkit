@@ -1,7 +1,7 @@
 {
   "name": "get-songs",
   "owner": {
-    "name": "get-songs"
+    "name": "LeeShavit"
   },
   "metadata": {
     "description": "get-songs: Claude downloads any list of songs in the best version and quality using your own tools."
