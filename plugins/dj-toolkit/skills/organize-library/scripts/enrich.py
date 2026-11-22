@@ -12,7 +12,9 @@ rows = json.load(open(f"{S}/scan.json"))
 CACHE = f"{S}/deezer.json"
 cache = json.load(open(CACHE)) if os.path.exists(CACHE) else {}
 CTX = ssl.create_default_context(cafile=certifi.where())
-SKIP = tuple(p.strip("/") + "/" for p in os.environ.get("PROTECTED_REL", "").split(os.pathsep) if p)  # scan.py already skips protected folders
+SKIP = tuple(os.path.relpath(os.path.expanduser(p), os.path.expanduser(os.environ.get("MUSIC_ROOT", "/"))).rstrip("/") + "/"
+             if os.path.isabs(os.path.expanduser(p)) else p.strip("/") + "/"
+             for p in os.environ.get("PROTECTED", "").split(os.pathsep) if p)  # same rule as scan.py (trailing-separator match)
 last = [0.0]
 
 def get(url):

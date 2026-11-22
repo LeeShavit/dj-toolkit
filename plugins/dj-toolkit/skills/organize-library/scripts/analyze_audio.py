@@ -9,6 +9,9 @@
 import json, multiprocessing as mp, os, sys
 S = os.environ["WORK"]
 ROOT = os.environ["MUSIC_ROOT"]
+SKIP = tuple(os.path.relpath(os.path.expanduser(p), os.path.expanduser(os.environ.get("MUSIC_ROOT", "/"))).rstrip("/") + "/"
+             if os.path.isabs(os.path.expanduser(p)) else p.strip("/") + "/"
+             for p in os.environ.get("PROTECTED", "").split(os.pathsep) if p)  # same rule as scan.py (trailing-separator match)
 
 def work(rel):
     import essentia
@@ -31,7 +34,7 @@ if __name__ == "__main__":
     rows = json.load(open(f"{S}/scan.json"))
     out_p = f"{S}/audio.json"
     done = json.load(open(out_p)) if os.path.exists(out_p) else {}
-    todo = [r["path"] for r in rows if not r["path"].startswith(("rekordbox/", "Music/"))
+    todo = [r["path"] for r in rows if not (SKIP and r["path"].startswith(SKIP))
             and r["path"] not in done
             and not ({"bpm", "key"} <= set(r.get("tags", {})))]
     print("todo", len(todo), flush=True)

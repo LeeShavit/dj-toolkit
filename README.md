@@ -4,12 +4,21 @@ A Claude Code plugin that collects a working DJ's know-how into skills Claude ru
 
 ## Install
 
-In Claude Code:
-```
-/plugin marketplace add LeeShavit/dj-toolkit
-/plugin install dj-toolkit@dj-toolkit
-/dj-setup
-```
+**Claude Desktop** (Mac or Windows, any paid Claude plan):
+1. Open the **Code** tab and start a **local** session (not cloud). Any folder works.
+2. Paste these two lines, one at a time:
+   ```
+   /plugin marketplace add LeeShavit/dj-toolkit
+   /plugin install dj-toolkit@dj-toolkit
+   ```
+   Choose **user** scope if asked. You can also click **+** → **Plugins** (or **Add plugins**) and install from there once the marketplace is added.
+3. Start a **new** session and type `/dj-setup`. It may be listed as `/dj-toolkit:dj-setup`.
+
+**Terminal** (Claude Code CLI): `claude plugin marketplace add LeeShavit/dj-toolkit && claude plugin install dj-toolkit@dj-toolkit`, then `/dj-setup` in a new session. Desktop and the CLI share installed plugins.
+
+**Updates:** `/plugin marketplace update dj-toolkit`, then start a new session.
+
+Cowork isn't supported yet. The tools run scripts on your own music folders, which needs a local Code session.
 `/dj-setup` asks about 5 minutes of questions: your DJ software, library folders, **folders that must never be touched**, genres, download sources and preferences. Then it installs the small runtime (`uv` + `ffmpeg`). Every tool reads that one config.
 
 ## The tools
@@ -32,7 +41,7 @@ In Claude Code:
 - get-songs never completes a purchase and never bypasses DRM or paywalls.
 
 ## Requirements
-Claude Code · macOS or Windows (Linux works for most tools) · `uv` and `ffmpeg` (installed by `/dj-setup`) · Claude in Chrome for the Beatport/Bandcamp cart and Beatport version lookups.
+Claude Desktop (Code tab) or Claude Code, on a paid plan · macOS or Windows (Linux works for most tools) · `uv` and `ffmpeg` (installed by `/dj-setup`) · Claude in Chrome for the Beatport/Bandcamp cart and Beatport version lookups.
 
 ## Fair use
 You're responsible for following copyright law and each service's terms where you live. Support the artists you play. 🙏
