@@ -1,0 +1,16 @@
+{
+  "name": "get-songs",
+  "owner": {
+    "name": "get-songs"
+  },
+  "metadata": {
+    "description": "get-songs: Claude downloads any list of songs in the best version and quality using your own tools."
+  },
+  "plugins": [
+    {
+      "name": "get-songs",
+      "source": "./plugins/get-songs",
+      "description": "Give Claude any list of songs and get them downloaded in the best quality and version (extended/club), using your own tools: Offline DJ, Soulseek, Qobuz/Tidal/Deezer, Beatport/Bandcamp carts and more."
+    }
+  ]
+}
