@@ -15,10 +15,13 @@ Both list their own dependencies, so `uv run` installs everything on first use (
 
 ```bash
 S=<this skill's base dir>/app
-uv run --upgrade-package yt-dlp "$S/setlist_id.py" "<set URL or audio file>" \
-   --out "<setlists_folder>/<set-name>" --country <shazam_country> --open
+export SETLIST_ID_HOME=~/.claude/dj-toolkit/setlist-id   # cache: audio + Shazam progress (resumable)
+export SETLIST_ID_OUT=<setlists_folder>                  # each set gets its own subfolder, named from the title
+uv run --upgrade-package yt-dlp "$S/setlist_id.py" "<set URL or audio file>" --country <shazam_country> --open
 ```
 - Read `setlists_folder` and `shazam_country` from `~/.claude/dj-toolkit/config.md`. Defaults are `~/Music/Setlists` and `US`.
+- **Always set both env vars.** Without them, data is written inside the plugin folder, which is replaced on every plugin update.
+- Strip playlist parameters from YouTube links (`&list=...`, `&index=...`) and keep only `watch?v=<id>`.
 - **Run it in the background.** A 1-hour set takes about 12-18 minutes, because Shazam rate-limits to about 1 request every 3 s and backs off on HTTP 429. Progress is cached, so an interrupted run resumes. Don't start two scans at once: they share the rate limit and both slow down.
 - Output in `--out`: `tracklist.html` (the report, which `--open` opens), `tracklist.md` (for pasting into descriptions or notes) and `tracklist.json` (for Claude).
 - Useful flags:

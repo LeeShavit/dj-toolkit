@@ -1,6 +1,6 @@
 {
   "name": "dj-toolkit",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A DJ's toolkit for Claude Code: /get-songs downloads any list in the best version from your own sources, /setlist-id tracklists DJ sets, /organize-library sorts and tags for rekordbox, /audio-quality catches fake lossless, /upgrade-to-extended swaps radio edits for extended mixes, /rekordbox-tools repoints playlists and triages BPMs, /dj-troubleshooting fixes common setup problems.",
   "author": { "name": "LeeShavit", "url": "https://github.com/LeeShavit" },
   "homepage": "https://github.com/LeeShavit/dj-toolkit",

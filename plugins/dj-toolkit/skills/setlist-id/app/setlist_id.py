@@ -51,8 +51,11 @@ from shazamio.converter import Converter
 from shazamio.misc import ShazamUrl
 
 ROOT = Path(__file__).resolve().parent
-CACHE = ROOT / "cache"
-OUT = ROOT / "sets"
+# Standalone app: data lives next to the script. As a plugin skill the script folder is replaced on
+# every update, so the skill sets SETLIST_ID_HOME (cache) and SETLIST_ID_OUT (tracklists) instead.
+DATA = Path(os.path.expanduser(os.environ.get("SETLIST_ID_HOME", str(ROOT))))
+CACHE = DATA / "cache"
+OUT = Path(os.path.expanduser(os.environ.get("SETLIST_ID_OUT", str(DATA / "sets"))))
 
 EXACT_ORDER = ["Spotify", "Apple Music", "Deezer"]
 SEARCH_LINKS = [  # filled with the urlencoded "artist title"; DJ stores always, the rest as fallbacks
